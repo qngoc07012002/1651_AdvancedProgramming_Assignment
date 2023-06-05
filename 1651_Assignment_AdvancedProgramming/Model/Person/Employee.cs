@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace _1651_Assignment_AdvancedProgramming.Model.Person
 {
-    internal class Employee
+    internal class Employee : Person
     {
+        private string position;
+
+        public string Position { get { return position; } set { position = value; } }
+
+        public override void displayInformation()
+        {
+            Console.WriteLine(base.Name, " ", position);
+        }
     }
 }
