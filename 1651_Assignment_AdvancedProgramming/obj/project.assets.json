@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\IT_AdvancedProgramming_1651\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming.csproj",
+      "projectUniqueName": "C:\\IT_AdvancedProgramming_1651\\Assignment2\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming.csproj",
       "projectName": "1651_Assignment_AdvancedProgramming",
-      "projectPath": "C:\\IT_AdvancedProgramming_1651\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming.csproj",
+      "projectPath": "C:\\IT_AdvancedProgramming_1651\\Assignment2\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming.csproj",
       "packagesPath": "C:\\Users\\quang\\.nuget\\packages\\",
-      "outputPath": "C:\\IT_AdvancedProgramming_1651\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming\\obj\\",
+      "outputPath": "C:\\IT_AdvancedProgramming_1651\\Assignment2\\1651_Assignment_AdvancedProgramming\\1651_Assignment_AdvancedProgramming\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
