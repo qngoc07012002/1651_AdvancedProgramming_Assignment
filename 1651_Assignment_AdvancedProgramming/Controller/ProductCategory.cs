@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace _1651_Assignment_AdvancedProgramming.Controller
 {
-    internal class ProductCategory
+    enum ProductCategory
     {
+        Food,
+        Drink,
+        PersonalItem
     }
 }
