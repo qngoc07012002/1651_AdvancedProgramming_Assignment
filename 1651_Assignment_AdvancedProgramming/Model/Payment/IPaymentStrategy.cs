@@ -8,5 +8,6 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
 {
     internal interface IPaymentStrategy
     {
+        public void ProcessPayment(double amount);
     }
 }
