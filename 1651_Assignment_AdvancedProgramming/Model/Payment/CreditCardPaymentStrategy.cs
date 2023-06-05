@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace _1651_Assignment_AdvancedProgramming.Model.Payment
 {
-    internal class CreditCardPaymentStrategy
+    internal class CreditCardPaymentStrategy : IPaymentStrategy
     {
+        private string number;
+        private string ccv;
+        private string expDate;
+
+        private void Authorized()
+        {
+
+        }
+
+        public void ProcessPayment(double amount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
