@@ -1153,7 +1153,8 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "System.Data.SQLite >= 1.0.117"
+      "System.Data.SQLite >= 1.0.117",
+      "System.Data.SQLite.Core >= 1.0.117"
     ]
   },
   "packageFolders": {
@@ -1201,6 +1202,10 @@
         "targetAlias": "net5.0",
         "dependencies": {
           "System.Data.SQLite": {
+            "target": "Package",
+            "version": "[1.0.117, )"
+          },
+          "System.Data.SQLite.Core": {
             "target": "Package",
             "version": "[1.0.117, )"
           }
