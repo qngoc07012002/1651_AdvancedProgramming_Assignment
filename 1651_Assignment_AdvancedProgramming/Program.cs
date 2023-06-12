@@ -1,6 +1,5 @@
 ﻿using _1651_Assignment_AdvancedProgramming.Controller;
 using _1651_Assignment_AdvancedProgramming.Model.Order;
-using _1651_Assignment_AdvancedProgramming.Model.Payment;
 using _1651_Assignment_AdvancedProgramming.Model.PersonModel;
 using System;
 using System.Data.SQLite;
@@ -28,9 +27,6 @@ namespace _1651_Assignment_AdvancedProgramming
             employee.displayInformation();
             displayMenu();
 
-            IPaymentStrategy ipayment = new CreditCardPaymentStrategy();
-
-            ipayment.ProcessPayment(200);
 
             do
             {
@@ -65,7 +61,8 @@ namespace _1651_Assignment_AdvancedProgramming
                         productController.removeProduct();
                         break;
                     case 9:
-                        orderController.addOrder();
+                        order.addEmployeeInformation(employee);
+                        order.createOrder();
                         break;
                     case 10:
                         orderController.displayAllOrder();
