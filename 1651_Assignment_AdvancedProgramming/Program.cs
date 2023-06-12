@@ -1,5 +1,6 @@
 ﻿using _1651_Assignment_AdvancedProgramming.Controller;
 using _1651_Assignment_AdvancedProgramming.Model.Order;
+using _1651_Assignment_AdvancedProgramming.Model.Payment;
 using _1651_Assignment_AdvancedProgramming.Model.PersonModel;
 using System;
 using System.Data.SQLite;
@@ -26,6 +27,10 @@ namespace _1651_Assignment_AdvancedProgramming
             Console.Clear();
             employee.displayInformation();
             displayMenu();
+
+            IPaymentStrategy ipayment = new CreditCardPaymentStrategy();
+
+            ipayment.ProcessPayment(200);
 
             do
             {
