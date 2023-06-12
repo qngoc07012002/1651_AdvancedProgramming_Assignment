@@ -12,8 +12,25 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
 
         public void ProcessPayment(double amount)
         {
-            
-            
+            do
+            {
+                Console.Write("Enter Tendered: ");
+                cashTendered = double.Parse(Console.ReadLine());
+
+                if (cashTendered < amount)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Something went wrong, Please try again!");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                } else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Excess money returned: {cashTendered - amount}$");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                }
+            } while (cashTendered < amount);
         }
     }
 }
