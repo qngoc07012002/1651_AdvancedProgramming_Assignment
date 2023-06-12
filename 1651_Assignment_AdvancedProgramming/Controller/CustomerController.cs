@@ -17,6 +17,9 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
         {
             connection.Open();
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("_Add Customer_");
+            Console.ResetColor();
             Customer customer = new Customer();
             customer.enterInformation();
 
@@ -29,8 +32,9 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             cmd.Parameters.AddWithValue("@address", customer.Address);
             cmd.ExecuteNonQuery();
 
-            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Add Successfully");
+            Console.ResetColor();
             Console.WriteLine();
 
             connection.Close();
@@ -40,6 +44,9 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
         {
             connection.Open();
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("_Remove Customer_");
+            Console.ResetColor();
             Console.Write("Enter Customer ID: ");
             int id = int.Parse(Console.ReadLine());
 
@@ -49,14 +56,17 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 
             int rowsAffected = cmd.ExecuteNonQuery();
 
-            Console.WriteLine();
             if (rowsAffected > 0)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Customer with ID {id} has been deleted.");
+                Console.ResetColor();
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Failed to delete customer with ID {id}.");
+                Console.ResetColor();
             }
             Console.WriteLine();
 
@@ -67,6 +77,9 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
         {
             connection.Open();
 
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("_Edit Customer_");
+            Console.ResetColor();
             Console.Write("Enter Customer ID: ");
             int id = int.Parse(Console.ReadLine());
 
@@ -84,14 +97,17 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 
             int rowsAffected = cmd.ExecuteNonQuery();
 
-            Console.WriteLine();
             if (rowsAffected > 0)
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Customer with ID {id} has been updated.");
+                Console.ResetColor();
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Failed to update customer with ID {id}.");
+                Console.ResetColor();
             }
             Console.WriteLine();
 
@@ -102,7 +118,9 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
         {
             connection.Open();
 
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("_______________________________CUSTOMER_______________________________");
+            Console.ResetColor();
             var id = "ID";
             var fullName = "Name";
             var age = "Age";
@@ -151,6 +169,9 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
                 else
                 {
                     connection.Close();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Customer Not Found!");
+                    Console.ResetColor();
                     return null;
                 }
             }
