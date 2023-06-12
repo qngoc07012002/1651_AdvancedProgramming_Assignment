@@ -13,7 +13,7 @@ namespace _1651_Assignment_AdvancedProgramming.Model.PersonModel
         private int age;
         private string phoneNumber;
         
-        public int Id { get { return id; }  }
+        public int Id { get { return id; } set { id = value; } }
         public string Name { get { return name; } set { name = value; } }
         public int Age { get { return age; } set { age = value; } }
         public string PhoneNumber { get { return phoneNumber; } set { phoneNumber = value; } }
