@@ -27,9 +27,6 @@ namespace _1651_Assignment_AdvancedProgramming
             employee.displayInformation();
             displayMenu();
 
-            Customer customer = customerController.getCustomerByID(1);
-            Console.WriteLine(customer.Address);
-
             do
             {
                 Console.Write("Enter choice: ");
