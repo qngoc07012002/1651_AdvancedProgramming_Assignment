@@ -15,7 +15,7 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
 
         private bool Authorized()
         {
-            string regexDate = @"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/((19|20)\d{2})$";
+            string regexDate = @"^(0[1-9]|1[0-2])\/(0[1-9]|1[0-9]|2[0-9]|3[0-5])$";
             if (number.Length == 16)
             {
                 if (ccv.Length == 3 || ccv.Length == 4)
@@ -41,7 +41,7 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
                 number = MaskInput();
                 Console.Write("CCV: ");
                 ccv = MaskInput();
-                Console.Write("expDate(dd/mm/yyyy): ");
+                Console.Write("expDate(MM/YY): ");
                 expDate = Console.ReadLine();
                 Console.WriteLine(number);
             } while (Authorized() == false);
