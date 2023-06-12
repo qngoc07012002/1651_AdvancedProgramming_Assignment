@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _1651_Assignment_AdvancedProgramming.Controller
+namespace _1651_Assignment_AdvancedProgramming.Utilities
 {
     internal class ProductFactory
     {
