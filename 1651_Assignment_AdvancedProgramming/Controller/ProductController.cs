@@ -2,6 +2,7 @@
 using _1651_Assignment_AdvancedProgramming.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("_Add Product_");
             Console.ResetColor();
+
             Console.WriteLine("Category");
             Console.WriteLine("1.Food");
             Console.WriteLine("2.Drink");
@@ -201,64 +203,84 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 
         public Product getProductByID(int id)
         {
-            connection.Open();
+            Product product = null;
 
-            var sql = "SELECT * FROM Product WHERE ID = @ProductId";
-            var cmd = new SQLiteCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@ProductId", id);
-
-            using (var reader = cmd.ExecuteReader())
+            try
             {
-                if (reader.Read())
-                {
-                    string category = reader.GetString(4);
-                    Product product = null;
+                connection.Open();
 
-                    switch (category)
+                var sql = "SELECT * FROM Product WHERE ID = @ProductId";
+                var cmd = new SQLiteCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@ProductId", id);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
                     {
-                        case "Food":
-                            product = ProductFactory.getProduct(ProductCategory.Food);
-                            break;
-                        case "Drink":
-                            product = ProductFactory.getProduct(ProductCategory.Drink);
-                            break;
-                        case "PersonalItem":
-                            product = ProductFactory.getProduct(ProductCategory.PersonalItem);
-                            break;
+                        string category = reader.GetString(4);
+
+                        switch (category)
+                        {
+                            case "Food":
+                                product = ProductFactory.getProduct(ProductCategory.Food);
+                                break;
+                            case "Drink":
+                                product = ProductFactory.getProduct(ProductCategory.Drink);
+                                break;
+                            case "PersonalItem":
+                                product = ProductFactory.getProduct(ProductCategory.PersonalItem);
+                                break;
+                        }
+
+                        if (product != null)
+                        {
+                            product.Id = reader.GetInt32(0);
+                            product.Name = reader.GetString(1);
+                            product.Price = reader.GetDouble(2);
+                            product.Quantity = reader.GetInt32(3);
+                            product.Category = reader.GetString(4);
+                        }
                     }
-
-                    product.Id = reader.GetInt32(0);
-                    product.Name = reader.GetString(1);
-                    product.Price = reader.GetDouble(2);
-                    product.Quantity = reader.GetInt32(3);
-                    product.Category = reader.GetString(4);
-
-                    connection.Close();
-                    return product;
-                }
-                else
-                {
-                    connection.Close();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Product Not Found!");
-                    Console.ResetColor();
-                    return null;
                 }
             }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error: " + ex.Message);
+                Console.ResetColor();
+            }
+            finally
+            { 
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
+
+            if (product == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Product Not Found!");
+                Console.ResetColor();
+            }
+
+            return product;
         }
 
         public void updateQuantityById(int id, int quantity)
         {
-            connection.Open();
-
-            var sql = "UPDATE Product SET Quantity = @Quantity WHERE ID = @ID";
-            var cmd = new SQLiteCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@Quantity", quantity);
-            cmd.Parameters.AddWithValue("@ID", id);
-
-            int rowsAffected = cmd.ExecuteNonQuery();
-
-            connection.Close();
+            try
+            {
+                connection.Open();
+                var sql = "UPDATE Product SET Quantity = @Quantity WHERE ID = @ID";
+                var cmd = new SQLiteCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@Quantity", quantity);
+                cmd.Parameters.AddWithValue("@ID", id);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                connection.Close();
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
         }
     }
 }
