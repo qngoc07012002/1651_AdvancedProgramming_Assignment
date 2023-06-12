@@ -21,13 +21,11 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Something went wrong, Please try again!");
-                    Console.WriteLine();
                     Console.ResetColor();
                 } else
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Excess money returned: {cashTendered - amount}$");
-                    Console.WriteLine();
+                    Console.WriteLine($"Excess money returned: {cashTendered - amount}$");           
                     Console.ResetColor();
                 }
             } while (cashTendered < amount);
