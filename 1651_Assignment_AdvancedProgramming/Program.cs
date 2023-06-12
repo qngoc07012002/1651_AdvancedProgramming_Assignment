@@ -70,6 +70,7 @@ namespace _1651_Assignment_AdvancedProgramming
                         break;
                     case 12:
                         Console.Clear();
+                        employee.displayInformation();
                         displayMenu();
                         break;
                     case 13:
