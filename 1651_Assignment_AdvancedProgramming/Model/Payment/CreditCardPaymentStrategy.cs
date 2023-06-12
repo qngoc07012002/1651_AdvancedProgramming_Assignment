@@ -16,7 +16,7 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
         private bool Authorized()
         {
             string regexDate = @"^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/((19|20)\d{2})$";
-            if (number.Length == 12)
+            if (number.Length == 16)
             {
                 if (ccv.Length == 3 || ccv.Length == 4)
                 {
@@ -45,13 +45,16 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
                 expDate = Console.ReadLine();
                 Console.WriteLine(number);
             } while (Authorized() == false);
-
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Payment Processing Successful!");
+            Console.ResetColor();
+            Console.WriteLine();
         }
 
         private string MaskInput()
         {
             StringBuilder ccvBuilder = new StringBuilder();
-            int count = 0; // Số kí tự đã nhập
+            int count = 0; 
             ConsoleKeyInfo keyInfo;
 
             do
@@ -64,7 +67,7 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
                     {
                         if (count > 0 && count % 4 == 0)
                         {
-                            Console.Write(" "); // In dấu cách
+                            Console.Write(" "); 
                         }
 
                         Console.Write("*");
@@ -74,7 +77,7 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
                 }
             } while (keyInfo.Key != ConsoleKey.Enter);
 
-            Console.WriteLine(); // Xuống dòng sau khi nhập xong CCV
+            Console.WriteLine();
 
             return ccvBuilder.ToString();
         }
