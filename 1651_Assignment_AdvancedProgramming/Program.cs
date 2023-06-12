@@ -25,14 +25,16 @@ namespace _1651_Assignment_AdvancedProgramming
             loadingBar();
             Console.Clear();
             employee.displayInformation();
-            Console.WriteLine();
             displayMenu();
-            Console.WriteLine();
+
+            Customer customer = customerController.getCustomerByID(1);
+            Console.WriteLine(customer.Address);
 
             do
             {
                 Console.Write("Enter choice: ");
                 choice = int.Parse(Console.ReadLine());
+                Console.WriteLine();
 
                 switch (choice)
                 {
@@ -47,6 +49,31 @@ namespace _1651_Assignment_AdvancedProgramming
                         break;
                     case 4:
                         customerController.removeCustomer();
+                        break;
+                    case 5:
+                        productController.displayAllProduct();
+                        break;
+                    case 6:
+                        productController.addProduct();
+                        break;
+                    case 7:
+                        productController.editProduct();
+                        break;
+                    case 8:
+                        productController.removeProduct();
+                        break;
+                    case 9:
+                        orderController.addOrder();
+                        break;
+                    case 10:
+                        orderController.displayAllOrder();
+                        break;
+                    case 11:
+                        orderController.displayAllOrderByCustomer();
+                        break;
+                    case 12:
+                        Console.Clear();
+                        displayMenu();
                         break;
                     case 13:
                         Environment.Exit(0);
@@ -100,6 +127,7 @@ namespace _1651_Assignment_AdvancedProgramming
 
         public static void displayMenu()
         {
+            Console.WriteLine();
             Console.WriteLine("_____Customer_____");
             Console.WriteLine("1.Display All Customer");
             Console.WriteLine("2.Add Customer");
@@ -117,6 +145,7 @@ namespace _1651_Assignment_AdvancedProgramming
             Console.WriteLine("_____Setting_____");
             Console.WriteLine("12.Clear Screen");
             Console.WriteLine("13.Exit");
+            Console.WriteLine();
         }
 
         private static void SelectData(SQLiteConnection conn)
