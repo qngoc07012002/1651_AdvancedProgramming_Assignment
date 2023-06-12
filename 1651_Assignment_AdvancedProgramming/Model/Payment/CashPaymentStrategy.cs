@@ -10,14 +10,10 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
     {
         private double cashTendered;
 
-        public void CashPayment()
-        {
-
-        }
-
         public void ProcessPayment(double amount)
         {
-            throw new NotImplementedException();
+            
+            
         }
     }
 }
