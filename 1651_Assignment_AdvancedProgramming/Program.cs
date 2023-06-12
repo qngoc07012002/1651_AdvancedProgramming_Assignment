@@ -20,6 +20,8 @@ namespace _1651_Assignment_AdvancedProgramming
             CustomerController customerController = new CustomerController();
             OrderController orderController = new OrderController();
             Order order = new Order();
+            int choice = 0;
+
             loadingBar();
             Console.Clear();
             employee.displayInformation();
@@ -27,6 +29,30 @@ namespace _1651_Assignment_AdvancedProgramming
             displayMenu();
             Console.WriteLine();
 
+            do
+            {
+                Console.Write("Enter choice: ");
+                choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        customerController.displayAllCustomer();
+                        break;
+                    case 2:
+                        customerController.addCustomer();
+                        break;
+                    case 3:
+                        customerController.editCustomer();
+                        break;
+                    case 4:
+                        customerController.removeCustomer();
+                        break;
+                    case 13:
+                        Environment.Exit(0);
+                        break;
+                }
+            } while (choice != 13);
 
 
             var sql = "Data Source=StoreManagement.db";
@@ -53,6 +79,8 @@ namespace _1651_Assignment_AdvancedProgramming
 
             //Customer ngoc = new Customer();
             //ngoc.displayCustomer();
+
+            customerController.displayAllCustomer();
         }
 
         public static void loadingBar()
@@ -73,19 +101,22 @@ namespace _1651_Assignment_AdvancedProgramming
         public static void displayMenu()
         {
             Console.WriteLine("_____Customer_____");
-            Console.WriteLine("1. Display All Customer");
-            Console.WriteLine("2. Add Customer");
-            Console.WriteLine("3. Edit Customer");
-            Console.WriteLine("4. Remove Customer");
+            Console.WriteLine("1.Display All Customer");
+            Console.WriteLine("2.Add Customer");
+            Console.WriteLine("3.Edit Customer");
+            Console.WriteLine("4.Remove Customer");
             Console.WriteLine("_____Product_____");
-            Console.WriteLine("5. Display All Product");
-            Console.WriteLine("6. Add Product");
-            Console.WriteLine("7. Edit Product");
-            Console.WriteLine("8. Remove Product");
+            Console.WriteLine("5.Display All Product");
+            Console.WriteLine("6.Add Product");
+            Console.WriteLine("7.Edit Product");
+            Console.WriteLine("8.Remove Product");
             Console.WriteLine("_____Order_____");
-            Console.WriteLine("9. Create Order");
-            Console.WriteLine("10. Display All Order");
-            Console.WriteLine("11. Display All Order By Customer");
+            Console.WriteLine("9.Create Order");
+            Console.WriteLine("10.Display All Order");
+            Console.WriteLine("11.Display All Order By Customer");
+            Console.WriteLine("_____Setting_____");
+            Console.WriteLine("12.Clear Screen");
+            Console.WriteLine("13.Exit");
         }
 
         private static void SelectData(SQLiteConnection conn)
