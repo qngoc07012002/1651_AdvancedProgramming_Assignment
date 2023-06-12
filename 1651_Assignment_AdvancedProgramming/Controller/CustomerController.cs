@@ -29,6 +29,10 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             cmd.Parameters.AddWithValue("@address", customer.Address);
             cmd.ExecuteNonQuery();
 
+            Console.WriteLine();
+            Console.WriteLine("Add Successfully");
+            Console.WriteLine();
+
             connection.Close();
         }
 
@@ -45,6 +49,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 
             int rowsAffected = cmd.ExecuteNonQuery();
 
+            Console.WriteLine();
             if (rowsAffected > 0)
             {
                 Console.WriteLine($"Customer with ID {id} has been deleted.");
@@ -53,6 +58,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             {
                 Console.WriteLine($"Failed to delete customer with ID {id}.");
             }
+            Console.WriteLine();
 
             connection.Close();
         }
@@ -74,10 +80,11 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             cmd.Parameters.AddWithValue("@Age", customer.Age);
             cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
             cmd.Parameters.AddWithValue("@Address", customer.Address);
-            cmd.Parameters.AddWithValue("@ID", customer.Id);
+            cmd.Parameters.AddWithValue("@ID", id);
 
             int rowsAffected = cmd.ExecuteNonQuery();
 
+            Console.WriteLine();
             if (rowsAffected > 0)
             {
                 Console.WriteLine($"Customer with ID {id} has been updated.");
@@ -86,6 +93,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             {
                 Console.WriteLine($"Failed to update customer with ID {id}.");
             }
+            Console.WriteLine();
 
             connection.Close();
         }
@@ -94,30 +102,60 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
         {
             connection.Open();
 
+            Console.WriteLine("_______________________________CUSTOMER_______________________________");
             var id = "ID";
             var fullName = "Name";
             var age = "Age";
             var phoneNumber = "PhoneNumber";
             var address = "Address";
-            Console.WriteLine($"{id,-5:s}{fullName,-35:s}{age,-10:d}{phoneNumber,-15:d}{address,-15:d}");
+            Console.WriteLine($"|{id,-5:s}|{fullName,-20:s}|{age,-10:d}|{phoneNumber,-15:d}|{address,-15:d}|");
             var sql = "SELECT * FROM Customer";
             var cmd = new SQLiteCommand(sql, connection);
             var reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                Console.WriteLine($"{reader.GetInt32(0),-5:d}" +
-                    $"{reader.GetString(1),-35:s}" +
-                    $"{reader.GetInt32(2),-10:d}" +
-                     $"{reader.GetString(3),-15:s}" +
-                    $"{reader.GetString(4),-15:s}");
+                Console.WriteLine($"|{reader.GetInt32(0),-5:d}|" +
+                    $"{reader.GetString(1),-20:s}|" +
+                    $"{reader.GetInt32(2),-10:d}|" +
+                     $"{reader.GetString(3),-15:s}|" +
+                    $"{reader.GetString(4),-15:s}|");
             }
+            Console.WriteLine();
 
             connection.Close();
         }
 
         public Customer getCustomerByID(int id)
         {
-            return null;
+            connection.Open();
+
+            var sql = "SELECT * FROM Customer WHERE ID = @CustomerId";
+            var cmd = new SQLiteCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@CustomerId", id);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    Customer customer = new Customer();
+
+                    customer.Id = reader.GetInt32(0);
+                    customer.Name = reader.GetString(1);
+                    customer.Age = reader.GetInt32(2);
+                    customer.PhoneNumber = reader.GetString(3);
+                    customer.Address = reader.GetString(4);
+
+                    connection.Close();
+                    return customer;
+                }
+                else
+                {
+                    connection.Close();
+                    return null;
+                }
+            }
+
+            
         }
     }
 }
