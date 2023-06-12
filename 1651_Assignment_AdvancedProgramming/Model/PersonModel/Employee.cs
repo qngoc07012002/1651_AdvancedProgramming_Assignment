@@ -12,9 +12,17 @@ namespace _1651_Assignment_AdvancedProgramming.Model.PersonModel
 
         public string Position { get { return position; } set { position = value; } }
 
+        public void enterInformation()
+        {
+            Console.Write("Enter Name: ");
+            base.Name = Console.ReadLine();
+            Console.Write("Enter Position: ");
+            Position = Console.ReadLine();
+        }
+
         public override void displayInformation()
         {
-            Console.WriteLine(base.Name, " ", position);
+            Console.WriteLine($"Welcome, {Position} {base.Name}");
         }
     }
 }
