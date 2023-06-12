@@ -247,9 +247,18 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             }
         }
 
-        public Product getProductByName(string name)
+        public void updateQuantityById(int id, int quantity)
         {
-            return null;
+            connection.Open();
+
+            var sql = "UPDATE Product SET Quantity = @Quantity WHERE ID = @ID";
+            var cmd = new SQLiteCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@Quantity", quantity);
+            cmd.Parameters.AddWithValue("@ID", id);
+
+            int rowsAffected = cmd.ExecuteNonQuery();
+
+            connection.Close();
         }
     }
 }
