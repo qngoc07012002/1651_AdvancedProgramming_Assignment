@@ -19,6 +19,8 @@ namespace _1651_Assignment_AdvancedProgramming.Model.ProductModel
         public double Price { get { return price; } set { price = value; } }
         public int Quantity { get { return quantity; } set { quantity = value; } }
 
+        public string Category { get { return category; } set { category = value; } }
+
         public abstract string getCategory();
     }
 }
