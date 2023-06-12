@@ -1,6 +1,9 @@
-﻿using _1651_Assignment_AdvancedProgramming.Model.PersonModel;
+﻿using _1651_Assignment_AdvancedProgramming.Controller;
+using _1651_Assignment_AdvancedProgramming.Model.Order;
+using _1651_Assignment_AdvancedProgramming.Model.PersonModel;
 using System;
 using System.Data.SQLite;
+using System.Threading;
 
 namespace _1651_Assignment_AdvancedProgramming
 {
@@ -8,7 +11,24 @@ namespace _1651_Assignment_AdvancedProgramming
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            // Enter Employee
+            Employee employee = new Employee();
+            employee.enterInformation();
+
+            // Create Controller
+            ProductController productController = new ProductController();
+            CustomerController customerController = new CustomerController();
+            OrderController orderController = new OrderController();
+            Order order = new Order();
+            loadingBar();
+            Console.Clear();
+            employee.displayInformation();
+            Console.WriteLine();
+            displayMenu();
+            Console.WriteLine();
+
+
+
             var sql = "Data Source=StoreManagement.db";
            // SQLiteConnection.CreateFile(createDB);
 
@@ -16,10 +36,12 @@ namespace _1651_Assignment_AdvancedProgramming
             try
             {
                 conn.Open();
-                InsertData(conn, "Ngoc Test 2", 20, "084842242424", "Ha Noi");
+                //InsertData(conn, "Ngoc Test 2", 20, "084842242424", "Ha Noi");
                 //UpdateData(conn, 5, "Ngoc Updated", 25, "01234567678", "Nha Trang");
                 //DeleteData(conn, 6);
                 SelectData(conn);
+                Console.WriteLine();
+                GetCustomerById(conn,1);
             } catch (Exception e)
             {
                 Console.WriteLine(e);
@@ -33,6 +55,39 @@ namespace _1651_Assignment_AdvancedProgramming
             //ngoc.displayCustomer();
         }
 
+        public static void loadingBar()
+        {
+            Console.Write("Processing ");
+            DateTime startTime = DateTime.Now;
+            while ((DateTime.Now - startTime).TotalSeconds < 1)
+            {
+                Console.Write(".");
+                Thread.Sleep(200);
+            
+            }
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, Console.CursorTop);
+        }
+
+        public static void displayMenu()
+        {
+            Console.WriteLine("_____Customer_____");
+            Console.WriteLine("1. Display All Customer");
+            Console.WriteLine("2. Add Customer");
+            Console.WriteLine("3. Edit Customer");
+            Console.WriteLine("4. Remove Customer");
+            Console.WriteLine("_____Product_____");
+            Console.WriteLine("5. Display All Product");
+            Console.WriteLine("6. Add Product");
+            Console.WriteLine("7. Edit Product");
+            Console.WriteLine("8. Remove Product");
+            Console.WriteLine("_____Order_____");
+            Console.WriteLine("9. Create Order");
+            Console.WriteLine("10. Display All Order");
+            Console.WriteLine("11. Display All Order By Customer");
+        }
+
         private static void SelectData(SQLiteConnection conn)
         {
             var id = "ID";
@@ -40,7 +95,7 @@ namespace _1651_Assignment_AdvancedProgramming
             var age = "Age";
             var phoneNumber = "PhoneNumber";
             var address = "Address";
-            Console.WriteLine($"{id,-20:s}{fullName,-35:s}{age,-20:d}{phoneNumber,10:d}{address,20:d}");
+            Console.WriteLine($"{id,-20:s}{fullName,-35:s}{age,-20:d}{phoneNumber,-20:d}{address,-20:d}");
             var sql = "SELECT * FROM Customer";
             var cmd = new SQLiteCommand(sql, conn);
             var reader = cmd.ExecuteReader();
@@ -49,8 +104,8 @@ namespace _1651_Assignment_AdvancedProgramming
                 Console.WriteLine($"{reader.GetInt32(0),-20:d}" +
                     $"{reader.GetString(1),-35:s}" +
                     $"{reader.GetInt32(2),-20:d}" +
-                     $"{reader.GetString(3),10:s}" +
-                    $"{reader.GetString(4),20:s}");
+                     $"{reader.GetString(3),-20:s}" +
+                    $"{reader.GetString(4),-20:s}");
             }
         }
 
@@ -104,6 +159,28 @@ namespace _1651_Assignment_AdvancedProgramming
             {
                 Console.WriteLine($"Failed to delete customer with ID {customerId}.");
             }
+        }
+
+        private static void GetCustomerById(SQLiteConnection conn, int customerId)
+        {
+            var sql = "SELECT * FROM Customer WHERE ID = @CustomerId";
+            var cmd = new SQLiteCommand(sql, conn);
+            cmd.Parameters.AddWithValue("@CustomerId", customerId);
+
+            using (var reader = cmd.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    var id = reader.GetInt32(0);
+                    var fullName = reader.GetString(1);
+                    var age = reader.GetInt32(2);
+                    var phoneNumber = reader.GetString(3);
+                    var address = reader.GetString(4);
+
+                    Console.WriteLine($"{id} {fullName} {age} {phoneNumber} {address}");
+                }
+            }
+
         }
     }
 }
