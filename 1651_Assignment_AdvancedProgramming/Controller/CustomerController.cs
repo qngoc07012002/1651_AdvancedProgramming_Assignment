@@ -1,6 +1,7 @@
 ﻿using _1651_Assignment_AdvancedProgramming.Model.PersonModel;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -145,38 +146,52 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 
         public Customer getCustomerByID(int id)
         {
-            connection.Open();
+            Customer customer = null;
 
-            var sql = "SELECT * FROM Customer WHERE ID = @CustomerId";
-            var cmd = new SQLiteCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@CustomerId", id);
-
-            using (var reader = cmd.ExecuteReader())
+            try
             {
-                if (reader.Read())
-                {
-                    Customer customer = new Customer();
+                connection.Open();
 
-                    customer.Id = reader.GetInt32(0);
-                    customer.Name = reader.GetString(1);
-                    customer.Age = reader.GetInt32(2);
-                    customer.PhoneNumber = reader.GetString(3);
-                    customer.Address = reader.GetString(4);
+                var sql = "SELECT * FROM Customer WHERE ID = @CustomerId";
+                var cmd = new SQLiteCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@CustomerId", id);
 
-                    connection.Close();
-                    return customer;
-                }
-                else
+                using (var reader = cmd.ExecuteReader())
                 {
-                    connection.Close();
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Customer Not Found!");
-                    Console.ResetColor();
-                    return null;
+                    if (reader.Read())
+                    {
+                        customer = new Customer();
+
+                        customer.Id = reader.GetInt32(0);
+                        customer.Name = reader.GetString(1);
+                        customer.Age = reader.GetInt32(2);
+                        customer.PhoneNumber = reader.GetString(3);
+                        customer.Address = reader.GetString(4);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error: " + ex.Message);
+                Console.ResetColor();
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                    connection.Close();
+            }
 
-            
+            if (customer == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Customer Not Found!");
+                Console.ResetColor();
+            }
+
+            return customer;
+
+
         }
     }
 }
