@@ -63,6 +63,7 @@ namespace _1651_Assignment_AdvancedProgramming
                     case 9:
                         order.addEmployeeInformation(employee);
                         order.createOrder();
+                        orderController.addOrder(order);
                         break;
                     case 10:
                         orderController.displayAllOrder();
@@ -112,6 +113,7 @@ namespace _1651_Assignment_AdvancedProgramming
 
         public static void loadingBar()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("Processing ");
             DateTime startTime = DateTime.Now;
             while ((DateTime.Now - startTime).TotalSeconds < 1)
@@ -123,6 +125,7 @@ namespace _1651_Assignment_AdvancedProgramming
             Console.SetCursorPosition(0, Console.CursorTop);
             Console.Write(new string(' ', Console.WindowWidth));
             Console.SetCursorPosition(0, Console.CursorTop);
+            Console.ResetColor();
         }
 
         public static void displayMenu()
