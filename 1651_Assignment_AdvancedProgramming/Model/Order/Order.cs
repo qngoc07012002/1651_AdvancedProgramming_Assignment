@@ -20,7 +20,14 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Order
         private List<Product> orderItemList = new List<Product>();
         private double totalPrice;
         private DateTime date;
+
         public int Id { get { return id; }  }
+        public Customer Customer { get { return customer; }  }
+        public Employee Employee { get { return employee; }  }
+        public IPaymentStrategy PaymentMethod { get { return paymentMethod; } }
+        public IReadOnlyCollection<Product> OrderItemList { get { return orderItemList.AsReadOnly(); } }
+        public double TotalPrice { get { return totalPrice; }  }
+        public DateTime Date { get { return date; } }
 
         public void createOrder()
         {
@@ -32,6 +39,10 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Order
             addProductToOrder();
             addPaymentMethod();
             processCheckout();
+            foreach (var item in orderItemList)
+            {
+                Console.WriteLine($"{item.Name} {item.Quantity} {item.Price}");
+            }
         }
 
         public void addEmployeeInformation(Employee employee)
@@ -41,10 +52,13 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Order
 
         public void addCustomerInformation()
         {
-            Console.Write("Enter Customer ID: ");
-            int customerID = int.Parse(Console.ReadLine());
-            CustomerController customerController = new CustomerController();
-            customer = customerController.getCustomerByID(customerID);
+            do
+            {
+                Console.Write("Enter Customer ID: ");
+                int customerID = int.Parse(Console.ReadLine());
+                CustomerController customerController = new CustomerController();
+                customer = customerController.getCustomerByID(customerID);
+            } while (customer == null);
             Console.WriteLine();
         }
 
