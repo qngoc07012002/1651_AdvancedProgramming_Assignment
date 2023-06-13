@@ -19,7 +19,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             {
                 connection.Open();
 
-                var sql = "INSERT INTO Order (CustomerID, Employee, PaymentMethod, TotalPrice, Date) " +
+                var sql = "INSERT INTO [Order] (CustomerID, Employee, PaymentMethod, TotalPrice, Date) " +
                     "VALUES (@customerID, @employee, @paymentMethod, @totalPrice, @date)";
                 var cmd = new SQLiteCommand(sql, connection);
                 cmd.Parameters.AddWithValue("@customerID", order.Customer.Id);
