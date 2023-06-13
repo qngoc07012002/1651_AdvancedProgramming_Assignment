@@ -14,6 +14,10 @@ namespace _1651_Assignment_AdvancedProgramming.Model.PersonModel
 
         public override void  enterInformation()
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("_Enter Employee Information_");
+            Console.ResetColor();
+
             Console.Write("Enter Name: ");
             base.Name = Console.ReadLine();
             Console.Write("Enter Position: ");
@@ -22,7 +26,9 @@ namespace _1651_Assignment_AdvancedProgramming.Model.PersonModel
 
         public override void displayInformation()
         {
-            Console.WriteLine($"Welcome, {Position} {base.Name}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"Welcome, {Position} {base.Name}!");
+            Console.ResetColor();
         }
     }
 }
