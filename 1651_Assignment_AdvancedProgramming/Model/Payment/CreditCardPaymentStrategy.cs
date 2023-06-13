@@ -43,7 +43,6 @@ namespace _1651_Assignment_AdvancedProgramming.Model.Payment
                 ccv = MaskInput();
                 Console.Write("expDate(MM/YY): ");
                 expDate = Console.ReadLine();
-                Console.WriteLine(number);
             } while (Authorized() == false);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Payment Processing Successful!");
