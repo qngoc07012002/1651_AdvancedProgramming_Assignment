@@ -12,7 +12,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 {
     internal class ProductController
     {
-        public List<Product> listProduct = new List<Product>();
+        private List<Product> listProduct = new List<Product>();
         SQLiteConnection connection = new SQLiteConnection("Data Source=StoreManagement.db");
 
         public void getData()
@@ -50,8 +50,6 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
                     product.Category = category;
 
                     listProduct.Add(product);
-
-
                 }
 
             }

@@ -11,8 +11,41 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 {
     internal class CustomerController
     {
-        private List<Customer> listCustomer;
+        private List<Customer> listCustomer = new List<Customer>();
         SQLiteConnection connection = new SQLiteConnection("Data Source=StoreManagement.db");
+
+        public void getData()
+        {
+            try
+            {
+                connection.Open();
+
+                var sql = "SELECT * FROM Customer";
+                var cmd = new SQLiteCommand(sql, connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Customer customer = new Customer();
+
+                    customer.Id = reader.GetInt32(0);
+                    customer.Name = reader.GetString(1);
+                    customer.Age = reader.GetInt32(2);
+                    customer.PhoneNumber = reader.GetString(3);
+                    customer.Address = reader.GetString(4);
+
+                    listCustomer.Add(customer);
+                }
+
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("An error occurred while reading data from the database:");
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
+        }
 
         public void addCustomer()
         {
@@ -117,8 +150,6 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 
         public void displayAllCustomer()
         {
-            connection.Open();
-
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("_______________________________CUSTOMER_______________________________");
             Console.ResetColor();
@@ -128,20 +159,16 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             var phoneNumber = "PhoneNumber";
             var address = "Address";
             Console.WriteLine($"|{id,-5:s}|{fullName,-20:s}|{age,-10:d}|{phoneNumber,-15:d}|{address,-15:d}|");
-            var sql = "SELECT * FROM Customer";
-            var cmd = new SQLiteCommand(sql, connection);
-            var reader = cmd.ExecuteReader();
-            while (reader.Read())
+
+            foreach (var item in listCustomer)
             {
-                Console.WriteLine($"|{reader.GetInt32(0),-5:d}|" +
-                    $"{reader.GetString(1),-20:s}|" +
-                    $"{reader.GetInt32(2),-10:d}|" +
-                     $"{reader.GetString(3),-15:s}|" +
-                    $"{reader.GetString(4),-15:s}|");
+                Console.WriteLine($"|{item.Id,-5:d}|" +
+                    $"{item.Name,-20:s}|" +
+                    $"{item.Age,-10:d}|" +
+                    $"{item.PhoneNumber,-15:s}|" +
+                    $"{item.Address,-15:s}|");
             }
             Console.WriteLine();
-
-            connection.Close();
         }
 
         public Customer getCustomerByID(int id)

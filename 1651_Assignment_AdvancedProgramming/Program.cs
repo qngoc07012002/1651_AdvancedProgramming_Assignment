@@ -19,6 +19,7 @@ namespace _1651_Assignment_AdvancedProgramming
             ProductController productController = new ProductController();
             productController.getData();
             CustomerController customerController = new CustomerController();
+            customerController.getData();
             OrderController orderController = new OrderController();
             Order order = new Order();
             int choice = 0;
