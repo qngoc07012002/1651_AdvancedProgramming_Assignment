@@ -17,6 +17,7 @@ namespace _1651_Assignment_AdvancedProgramming
 
             // Create Controller
             ProductController productController = new ProductController();
+            productController.getData();
             CustomerController customerController = new CustomerController();
             OrderController orderController = new OrderController();
             Order order = new Order();
