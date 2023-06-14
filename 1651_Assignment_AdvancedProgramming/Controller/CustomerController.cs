@@ -11,7 +11,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 {
     internal class CustomerController
     {
-        private List<Customer> listCustomer = new List<Customer>();
+        private static List<Customer> listCustomer = new List<Customer>();
         SQLiteConnection connection = new SQLiteConnection("Data Source=StoreManagement.db");
 
         public void getData()
@@ -48,68 +48,105 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
         }
 
         public void addCustomer()
-        {
-            connection.Open();
-
+        { 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("_Add Customer_");
             Console.ResetColor();
             Customer customer = new Customer();
             customer.enterInformation();
+            customer.Id = listCustomer[listCustomer.Count - 1].Id + 1;
 
-            var sql = "INSERT INTO Customer(Name, Age, PhoneNumber, Address) " +
-                "VALUES(@name, @age, @phoneNumber, @address)";
-            var cmd = new SQLiteCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@name", customer.Name);
-            cmd.Parameters.AddWithValue("@age", customer.Age);
-            cmd.Parameters.AddWithValue("@phoneNumber", customer.PhoneNumber);
-            cmd.Parameters.AddWithValue("@address", customer.Address);
-            cmd.ExecuteNonQuery();
+            // Add customer to List
+            listCustomer.Add(customer);
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Add Successfully");
-            Console.ResetColor();
-            Console.WriteLine();
 
-            connection.Close();
+            try
+            {
+                connection.Open();
+
+                var sql = "INSERT INTO Customer(Name, Age, PhoneNumber, Address) " +
+                    "VALUES(@name, @age, @phoneNumber, @address)";
+                var cmd = new SQLiteCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@name", customer.Name);
+                cmd.Parameters.AddWithValue("@age", customer.Age);
+                cmd.Parameters.AddWithValue("@phoneNumber", customer.PhoneNumber);
+                cmd.Parameters.AddWithValue("@address", customer.Address);
+                cmd.ExecuteNonQuery();
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Add Successfully");
+                Console.ResetColor();
+                Console.WriteLine();
+
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("An error occurred while inserting data into the database:");
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+            }
         }
 
         public void removeCustomer()
         {
-            connection.Open();
-
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("_Remove Customer_");
             Console.ResetColor();
             Console.Write("Enter Customer ID: ");
             int id = int.Parse(Console.ReadLine());
 
-            var sql = "DELETE FROM Customer WHERE ID = @ID";
-            var cmd = new SQLiteCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@ID", id);
+            bool checkRemove = false;
 
-            int rowsAffected = cmd.ExecuteNonQuery();
-
-            if (rowsAffected > 0)
+            foreach (var item in listCustomer)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Customer with ID {id} has been deleted.");
-                Console.ResetColor();
+                if (item.Id == id)
+                {
+                    listCustomer.Remove(item);
+                    checkRemove = true;
+                    break;
+                }
             }
-            else
+
+            try
+            {
+                connection.Open();
+
+                var sql = "DELETE FROM Customer WHERE ID = @ID";
+                var cmd = new SQLiteCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@ID", id);
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected > 0 && checkRemove == true)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Customer with ID {id} has been deleted.");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Failed to delete customer with ID {id}.");
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+
+                connection.Close();
+            }
+            catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Failed to delete customer with ID {id}.");
+                Console.Write("An error occurred while deleting customer from the database:");
+                Console.WriteLine(ex.Message);
                 Console.ResetColor();
             }
-            Console.WriteLine();
-
-            connection.Close();
         }
 
         public void editCustomer()
         {
-            connection.Open();
+       
 
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("_Edit Customer_");
@@ -117,35 +154,68 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             Console.Write("Enter Customer ID: ");
             int id = int.Parse(Console.ReadLine());
 
-            Console.WriteLine("-Enter New Information-");
-            Customer customer = new Customer();
-            customer.enterInformation();
+            bool checkEdit = false;
 
-            var sql = "UPDATE Customer SET Name = @Name, Age = @Age, PhoneNumber = @PhoneNumber, Address = @Address WHERE ID = @ID";
-            var cmd = new SQLiteCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@Name", customer.Name);
-            cmd.Parameters.AddWithValue("@Age", customer.Age);
-            cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
-            cmd.Parameters.AddWithValue("@Address", customer.Address);
-            cmd.Parameters.AddWithValue("@ID", id);
-
-            int rowsAffected = cmd.ExecuteNonQuery();
-
-            if (rowsAffected > 0)
+            foreach (var item in listCustomer)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Customer with ID {id} has been updated.");
-                Console.ResetColor();
+                if (item.Id == id)
+                {
+                    checkEdit = true;
+                    break;
+                }
+            }
+
+            if (checkEdit == true)
+            {
+                Console.WriteLine("-Enter New Information-");
+                Customer customer = new Customer();
+                customer.enterInformation();
+
+                try
+                {
+                    connection.Open();
+
+                    var sql = "UPDATE Customer SET Name = @Name, Age = @Age, PhoneNumber = @PhoneNumber, Address = @Address WHERE ID = @ID";
+                    var cmd = new SQLiteCommand(sql, connection);
+                    cmd.Parameters.AddWithValue("@Name", customer.Name);
+                    cmd.Parameters.AddWithValue("@Age", customer.Age);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@Address", customer.Address);
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Customer with ID {id} has been updated.");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Failed to update customer with ID {id}.");
+                        Console.ResetColor();
+                    }
+                    Console.WriteLine();
+
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("An error occurred while updating customer in the database:");
+                    Console.WriteLine(ex.Message);
+                    Console.ResetColor();
+                }
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Failed to update customer with ID {id}.");
+                Console.WriteLine($"Customer not found!");
                 Console.ResetColor();
+                Console.WriteLine();
             }
-            Console.WriteLine();
-
-            connection.Close();
         }
 
         public void displayAllCustomer()
@@ -175,50 +245,24 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
         {
             Customer customer = null;
 
-            try
+            foreach (var item in listCustomer)
             {
-                connection.Open();
-
-                var sql = "SELECT * FROM Customer WHERE ID = @CustomerId";
-                var cmd = new SQLiteCommand(sql, connection);
-                cmd.Parameters.AddWithValue("@CustomerId", id);
-
-                using (var reader = cmd.ExecuteReader())
+                if (item.Id == id)
                 {
-                    if (reader.Read())
-                    {
-                        customer = new Customer();
-
-                        customer.Id = reader.GetInt32(0);
-                        customer.Name = reader.GetString(1);
-                        customer.Age = reader.GetInt32(2);
-                        customer.PhoneNumber = reader.GetString(3);
-                        customer.Address = reader.GetString(4);
-                    }
+                    customer = item;
+                    break;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Error: " + ex.Message);
-                Console.ResetColor();
-            }
-            finally
-            {
-                if (connection.State == ConnectionState.Open)
-                    connection.Close();
             }
 
             if (customer == null)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Customer Not Found!");
+                Console.WriteLine("Product Not Found!");
                 Console.ResetColor();
+                Console.WriteLine();
             }
 
             return customer;
-
-
         }
     }
 }

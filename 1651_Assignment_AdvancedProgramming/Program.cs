@@ -21,6 +21,7 @@ namespace _1651_Assignment_AdvancedProgramming
             CustomerController customerController = new CustomerController();
             customerController.getData();
             OrderController orderController = new OrderController();
+            orderController.getData();
             Order order = new Order();
             int choice = 0;
 
@@ -74,11 +75,14 @@ namespace _1651_Assignment_AdvancedProgramming
                         orderController.displayAllOrderByCustomer();
                         break;
                     case 12:
+                        orderController.displayOrderDetails();
+                        break;
+                    case 13:
                         Console.Clear();
                         employee.displayInformation();
                         displayMenu();
                         break;
-                    case 13:
+                    case 14:
                         Environment.Exit(0);
                         break;
                 }
@@ -126,11 +130,12 @@ namespace _1651_Assignment_AdvancedProgramming
             Console.WriteLine("9.Create Order");
             Console.WriteLine("10.Display All Order");
             Console.WriteLine("11.Display All Order By Customer");
+            Console.WriteLine("12.Display Order Details");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("_____Setting_____");
             Console.ResetColor();
-            Console.WriteLine("12.Clear Screen");
-            Console.WriteLine("13.Exit");
+            Console.WriteLine("13.Clear Screen");
+            Console.WriteLine("14.Exit");
             Console.WriteLine();
         }
     }
