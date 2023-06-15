@@ -86,7 +86,7 @@ namespace _1651_Assignment_AdvancedProgramming
                         Environment.Exit(0);
                         break;
                 }
-            } while (choice != 13);
+            } while (choice != 14);
 
         }
 
