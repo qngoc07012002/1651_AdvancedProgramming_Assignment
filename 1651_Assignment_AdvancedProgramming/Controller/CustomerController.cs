@@ -11,7 +11,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 {
     internal class CustomerController
     {
-        private static List<Customer> listCustomer = new List<Customer>();
+        public static List<Customer> listCustomer = new List<Customer>();
         SQLiteConnection connection = new SQLiteConnection("Data Source=StoreManagement.db");
 
         public void getData()

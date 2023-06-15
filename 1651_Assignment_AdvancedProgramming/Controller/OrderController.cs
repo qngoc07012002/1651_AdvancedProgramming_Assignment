@@ -10,7 +10,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 {
     internal class OrderController
     {
-        private static List<Order> listOrder = new List<Order>();
+        public static List<Order> listOrder = new List<Order>();
         SQLiteConnection connection = new SQLiteConnection("Data Source=StoreManagement.db");
 
         public void getData()

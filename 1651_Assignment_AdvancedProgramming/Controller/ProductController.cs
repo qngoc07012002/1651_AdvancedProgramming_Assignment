@@ -12,7 +12,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
 {
     internal class ProductController
     {
-        private static List<Product> listProduct = new List<Product>();
+        public static List<Product> listProduct = new List<Product>();
         SQLiteConnection connection = new SQLiteConnection("Data Source=StoreManagement.db");
 
         public void getData()
