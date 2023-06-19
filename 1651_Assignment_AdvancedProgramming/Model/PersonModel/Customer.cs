@@ -30,8 +30,5 @@ namespace _1651_Assignment_AdvancedProgramming.Model.PersonModel
             Console.WriteLine(base.Name," ",address);
         }
 
-        
-  
-
     }
 }

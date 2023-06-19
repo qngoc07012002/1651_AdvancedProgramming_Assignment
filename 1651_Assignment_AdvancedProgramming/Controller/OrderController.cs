@@ -77,7 +77,7 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
                         "VALUES (@orderID, @productName, @quantity, @totalPrice, @category)";
                     cmd = new SQLiteCommand(sql, connection);
                     cmd.Parameters.AddWithValue("@orderID", orderID);
-                    cmd.Parameters.AddWithValue("@productName", orderItem.Id);
+                    cmd.Parameters.AddWithValue("@productName", orderItem.Name);
                     cmd.Parameters.AddWithValue("@quantity", orderItem.Quantity);
                     cmd.Parameters.AddWithValue("@totalPrice", orderItem.Price);
                     cmd.Parameters.AddWithValue("@category", orderItem.Category);

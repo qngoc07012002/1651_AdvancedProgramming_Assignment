@@ -208,52 +208,56 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             Console.ResetColor();
             Console.Write("Enter Product ID: ");
             int id = int.Parse(Console.ReadLine());
-
+            Product product = null;
             bool checkEdit = false;
 
-            foreach (var item in listProduct)
+            for (int i = 0; i < listProduct.Count; i++)
             {
-                if (item.Id == id)
+                product = listProduct[i];
+                if (product.Id == id)
                 {
                     checkEdit = true;
+                    Console.WriteLine("-Enter New Information-");
+                    Console.WriteLine("Category");
+                    Console.WriteLine("1.Food");
+                    Console.WriteLine("2.Drink");
+                    Console.WriteLine("3.Personal Item");
+                    Console.Write("Enter Category: ");
+                    int category = int.Parse(Console.ReadLine());
+
+                    switch (category)
+                    {
+                        case 1:
+                            product = ProductFactory.getProduct(ProductCategory.Food);
+                            break;
+                        case 2:
+                            product = ProductFactory.getProduct(ProductCategory.Drink);
+                            break;
+                        case 3:
+                            product = ProductFactory.getProduct(ProductCategory.PersonalItem);
+                            break;
+                    }
+
+                    product.Category = product.getCategory();
+
+                    Console.Write("Name: ");
+                    product.Name = Console.ReadLine();
+                    Console.Write("Price: ");
+                    product.Price = double.Parse(Console.ReadLine());
+                    Console.Write("Quantity: ");
+                    product.Quantity = int.Parse(Console.ReadLine());
+
+                    listProduct[i] = product;
                     break;
                 }
             }
 
-            int category = 0;
-            Product product = null;
+ 
+         
 
             if (checkEdit == true)
             {
-                Console.WriteLine("-Enter New Information-");
-                Console.WriteLine("Category");
-                Console.WriteLine("1.Food");
-                Console.WriteLine("2.Drink");
-                Console.WriteLine("3.Personal Item");
-                Console.Write("Enter Category: ");
-                category = int.Parse(Console.ReadLine());
 
-                switch (category)
-                {
-                    case 1:
-                        product = ProductFactory.getProduct(ProductCategory.Food);
-                        break;
-                    case 2:
-                        product = ProductFactory.getProduct(ProductCategory.Drink);
-                        break;
-                    case 3:
-                        product = ProductFactory.getProduct(ProductCategory.PersonalItem);
-                        break;
-                }
-
-                product.Category = product.getCategory();
-
-                Console.Write("Name: ");
-                product.Name = Console.ReadLine();
-                Console.Write("Price: ");
-                product.Price = double.Parse(Console.ReadLine());
-                Console.Write("Quantity: ");
-                product.Quantity = int.Parse(Console.ReadLine());
 
                 try
                 {

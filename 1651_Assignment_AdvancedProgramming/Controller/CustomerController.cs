@@ -153,23 +153,24 @@ namespace _1651_Assignment_AdvancedProgramming.Controller
             Console.ResetColor();
             Console.Write("Enter Customer ID: ");
             int id = int.Parse(Console.ReadLine());
-
+            Customer customer = new Customer();
             bool checkEdit = false;
 
-            foreach (var item in listCustomer)
+            for (int i = 0; i < listCustomer.Count; i++)
             {
-                if (item.Id == id)
+                customer = listCustomer[i];
+                if (customer.Id == id)
                 {
                     checkEdit = true;
+                    Console.WriteLine("-Enter New Information-");
+                    customer.enterInformation();
+                    listCustomer[i] = customer;
                     break;
                 }
             }
 
             if (checkEdit == true)
             {
-                Console.WriteLine("-Enter New Information-");
-                Customer customer = new Customer();
-                customer.enterInformation();
 
                 try
                 {
